@@ -4,7 +4,7 @@ import random
 import numpy as np
 from bs4 import BeautifulSoup
 
-BASE_URL = "http://13.209.16.100:8000"
+BASE_URL = "http://DVWA web server IP address:8000"
 LOGIN_URL = BASE_URL + "/login.php"
 BRUTE_URL = BASE_URL + "/vulnerabilities/brute/"
 
