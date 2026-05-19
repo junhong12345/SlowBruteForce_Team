@@ -24,7 +24,7 @@ USER_AGENTS = [ #13개 user agent
     "Mozilla/5.0 (Linux; Android 4.4.3; KFTHWI Build/KTU84M) AppleWebKit/537.36 (KHTML, like Gecko) Silk/47.1.79 like Chrome/47.0.2526.80 Safari/537.36"
 ]
 
-USER_IDS = ["admin", "root", "user", "test", "guest"]
+USER_IDS = ["admin", "root", "user", "test", "guest", "cju", "user", "soccer", "secret", "jordan", "fuckyou", "loveme", "football", "surperman"]
 
 # =========================
 # 패턴 선택
@@ -130,7 +130,7 @@ for i in range(count):
     elif mode == 2:
         wait = random.uniform(20, 120) if i < count//2 else random.uniform(3, 10)
     elif mode == 3:
-        wait = random.uniform(8, 600)
+        wait = random.uniform(8, 600)   #8초 ~ 60초 디벨롭
     elif mode == 4:
         wait = float(input("대기 시간 입력: "))
     elif mode == 5:
