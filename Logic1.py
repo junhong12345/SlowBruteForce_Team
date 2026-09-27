@@ -1,3 +1,4 @@
+#Logic1.py
 import os
 import sys
 import json
@@ -94,14 +95,38 @@ class LogAnalysis:
             result_list = []
 
             for ip, data in self.ip_dict.items():
-                timestamps = sorted(data["timestamps"])  # 🔥 정렬 필수
+
+                timestamps = sorted(data["timestamps"])
+                connection_count = len(timestamps)
+
+                # 동일 IP에서 접속 횟수가 5회 이하이면 STD 계산 제외
+                if connection_count <= 5:
+
+                    res_obj = {
+                        "ip": ip,
+                        "username": data["username"],
+                        "connection_count": connection_count,
+                        "std_deviation": None,
+                        "status": "insufficient"
+                    }
+
+                    result_list.append(res_obj)
+
+                    print(
+                        f"IP : {ip} 데이터 부족 "
+                        f"(접속 횟수: {connection_count}회)"
+                    )
+
+                    continue
+
+                # 동일 IP에서 6회 이상 발생한 경우에만 STD 계산
                 intervals = self.intervals(timestamps)
                 std_value = self.get_std(intervals)
 
                 res_obj = {
                     "ip": ip,
                     "username": data["username"],
-                    "connection_count": len(timestamps),
+                    "connection_count": connection_count,
                     "std_deviation": std_value,
                     "status": "allow"
                 }
@@ -111,7 +136,12 @@ class LogAnalysis:
             save_path = self.app_path / "Logic1_analysis_result.json"
 
             with open(save_path, "w", encoding="utf-8") as f:
-                json.dump(result_list, f, ensure_ascii=False, indent=4)
+                json.dump(
+                    result_list,
+                    f,
+                    ensure_ascii=False,
+                    indent=4
+                )
 
             print(f"분석 결과 저장 완료 → {save_path}")
 
@@ -124,4 +154,3 @@ if __name__ == "__main__":
     analysis.parsing()
     analysis.show_parsing_result()
     analysis.save_result()
-
